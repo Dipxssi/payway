@@ -1,7 +1,7 @@
 import express from "express"
 import mongoose from "mongoose"
-import { AccountModel } from "../db";
-import authMiddleware from "../midddleware";
+import { AccountModel } from "../db.js";
+import  authMiddleware from "../midddleware.js";
 const router = express.Router();
 
 

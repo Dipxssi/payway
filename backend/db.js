@@ -1,7 +1,7 @@
 import mongoose, {Schema, model } from "mongoose"
 import dotenv from "dotenv"
 dotenv.config();
-mongoose.connect(process.env.MONGO_URL)
+await mongoose.connect(process.env.MONGO_URL)
 
 const userSchema = new Schema ({
   username : {type :String},

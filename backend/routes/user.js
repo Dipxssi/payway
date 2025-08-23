@@ -1,11 +1,11 @@
 import express from "express"
 import * as z from "zod"
 import bcrypt from "bcrypt"
-import { UserModel , AccountModel } from "../db";
+import { UserModel , AccountModel } from "../db.js";
 import dotenv from "dotenv"
 dotenv.config();
 import jwt from "jsonwebtoken"
-import { authMiddleware } from "../midddleware"
+import  authMiddleware  from "../midddleware.js"
 const router = express.Router();
 
 router.post('/signup', async function (req, res) {
@@ -53,10 +53,10 @@ router.post('/signup', async function (req, res) {
 });
 
 router.post('/signin', async function (req, res) {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   const existingUser = await UserModel.findOne({
-    username
+    email
   })
 
   if (!existingUser) {
