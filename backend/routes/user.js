@@ -1,7 +1,7 @@
 import express from "express"
 import * as z from "zod"
 import bcrypt from "bcrypt"
-import { UserModel } from "../db";
+import { UserModel , AccountModel } from "../db";
 import dotenv from "dotenv"
 dotenv.config();
 import jwt from "jsonwebtoken"
@@ -31,10 +31,16 @@ router.post('/signup', async function (req, res) {
   const hashedPassword = await bcrypt.hash(password, 5);
 
   try {
-    await UserModel.create({
+   const newUser =  await UserModel.create({
       username: username,
       password: hashedPassword,
       email: email
+    })
+    const userId = newUser._id
+
+    await AccountModel.create({
+      userId,
+      balance: 1 + Math.random() * 10000
     })
     res.json({
       mssg: "You are signed up"
@@ -45,6 +51,7 @@ router.post('/signup', async function (req, res) {
     })
   }
 });
+
 router.post('/signin', async function (req, res) {
   const { username, password } = req.body;
 
@@ -126,4 +133,5 @@ router.get("/bulk", async function (req, res) {
     }))
   })
 })
+
 export default router;
